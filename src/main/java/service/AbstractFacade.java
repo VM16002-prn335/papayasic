@@ -62,7 +62,7 @@ public abstract class AbstractFacade<T> {
         javax.persistence.Query q = getEntityManager().createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
     }
-    
+
     public List<Object[]> getCuentas() {
         List<Object[]> lis = new ArrayList<>();
 
@@ -73,7 +73,6 @@ public abstract class AbstractFacade<T> {
             System.out.println("ex" + e);
         }
         return lis;
-        //SELECT m.idAbono.idCuenta,m.idAbono.cuenta, SUM(m.monto) FROM T   ransacciones m GROUP BY m.idAbono.cuenta ORDER BY m.idAbono.idCuenta
     }
-    
+
 }

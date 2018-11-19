@@ -60,16 +60,13 @@ public class CuentasFacadeREST extends AbstractFacade<Cuentas> {
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Cuentas find(@PathParam("id") String id) {
-        return super.find(id);
+    public String find(@PathParam("id") String id) {
+        return new Gson().toJson(super.find(id));
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String cuentas() {
-        for (Object[] st: super.getCuentas()) {
-            System.out.println(Arrays.toString(st));
-        }
         return new Gson().toJson(super.getCuentas());
     }
 
