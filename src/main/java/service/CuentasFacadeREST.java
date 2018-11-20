@@ -39,6 +39,7 @@ public class CuentasFacadeREST extends AbstractFacade<Cuentas> {
     }
 
     @GET
+        
     @Produces(MediaType.APPLICATION_JSON)
     public Response cuentas() {
         System.out.println("GETTO");

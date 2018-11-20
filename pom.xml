@@ -45,6 +45,12 @@
             <artifactId>postgresql</artifactId>
             <version>9.4.1209.jre7</version>
         </dependency>
+        <!-- cross filter -->
+        <dependency>
+            <groupId>com.thetransactioncompany</groupId>
+            <artifactId>cors-filter</artifactId>
+            <version>2.6</version>
+        </dependency>
     </dependencies>
 
     <build>
