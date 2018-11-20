@@ -38,7 +38,7 @@ public class CuentasFacadeREST extends AbstractFacade<Cuentas> {
     }
 
     @POST
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Consumes(MediaType.TEXT_PLAIN)
     public void create(String json) {
         System.out.println("POST");
         Gson g = new Gson();
