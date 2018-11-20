@@ -8,6 +8,7 @@ package service;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import entities.Cuentas;
 import javax.ejb.Stateless;
@@ -54,10 +55,20 @@ public class CuentasFacadeREST extends AbstractFacade<Cuentas> {
     public void addCuenta(String json) {
         System.out.println("POST");
         System.out.println(json);
-        JsonArray ar = new JsonParser().parse(json).getAsJsonArray();
-        for (JsonElement jsonElement : ar) {
-            System.out.println(jsonElement.getAsString());
+        JsonParser jsonParser = new JsonParser();
+        JsonObject jo = (JsonObject) jsonParser.parse(json);
+        Cuentas c = new Cuentas();
+        
+        c.setIdCuenta(jo.get("idCuenta").toString());
+        c.setCuenta(jo.get("cuenta").toString());
+        if(jo.get("ajuste").toString().equalsIgnoreCase("true")){
+            c.setAjuste(Boolean.TRUE);
+        }else{
+            c.setAjuste(Boolean.FALSE);
         }
+        c.setSucesor(new Cuentas(jo.get("susesor").toString()));
+        
+        System.out.println(c.getIdCuenta()+"  "+c.getAjuste()+"  "+c.getCuenta()+" "+c.getSucesor().getIdCuenta());
         //super.create(entity);
     }
 
