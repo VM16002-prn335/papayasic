@@ -6,8 +6,10 @@
 package service;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import entities.Cuentas;
-import java.lang.annotation.Annotation;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,9 +21,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 /**
  *
@@ -53,11 +53,11 @@ public class CuentasFacadeREST extends AbstractFacade<Cuentas> {
     @Consumes(MediaType.APPLICATION_JSON)
     public void addCuenta(String json) {
         System.out.println("POST");
-        Gson g = new Gson();
-        Cuentas c = g.fromJson(json, Cuentas.class);
         System.out.println(json);
-        System.out.println(c.getIdCuenta());
-        System.out.println(c);
+        JsonArray ar = new JsonParser().parse(json).getAsJsonArray();
+        for (JsonElement jsonElement : ar) {
+            System.out.println(jsonElement.getAsString());
+        }
         //super.create(entity);
     }
 
