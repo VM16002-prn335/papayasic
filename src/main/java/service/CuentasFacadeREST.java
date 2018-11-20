@@ -51,13 +51,10 @@ public class CuentasFacadeREST extends AbstractFacade<Cuentas> {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public void addCuenta(@QueryParam("idCuenta") String id, 
-            @QueryParam("cuenta") String cuenta, 
-            @QueryParam("sucesor") String sucesor, 
-            @QueryParam("ajuste") boolean ajuste) {
+    public void addCuenta(String json) {
         
         System.out.println("POST");
-        System.out.println(id + cuenta + sucesor + ajuste);
+        System.out.println(json);
         //super.create(entity);
     }
 
