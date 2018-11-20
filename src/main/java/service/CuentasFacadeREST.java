@@ -68,7 +68,7 @@ public class CuentasFacadeREST extends AbstractFacade<Cuentas> {
         }
         //c.setSucesor(new Cuentas(jo.get("susesor").toString()));
         
-        System.out.println(c.getIdCuenta()+"  "+c.getAjuste()+"  "+c.getCuenta()+" "+c.getSucesor().getIdCuenta());
+        System.out.println(c.getIdCuenta()+"  "+c.getAjuste()+"  "+c.getCuenta()+" ");
         //super.create(entity);
     }
 
