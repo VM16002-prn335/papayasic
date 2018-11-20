@@ -38,10 +38,13 @@ public class CuentasFacadeREST extends AbstractFacade<Cuentas> {
     }
 
     @POST
-    @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(Cuentas entity) {
-        super.create(entity);
+    public void create(String json) {
+        System.out.println("POST");
+        Gson g = new Gson();
+        Cuentas c = g.fromJson(json, Cuentas.class);
+        System.out.println(json);
+        //super.create(entity);
     }
 
     @PUT
@@ -61,6 +64,7 @@ public class CuentasFacadeREST extends AbstractFacade<Cuentas> {
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public String find(@PathParam("id") String id) {
+        System.out.println("GETTO");
         return new Gson().toJson(super.find(id));
     }
 
@@ -68,20 +72,6 @@ public class CuentasFacadeREST extends AbstractFacade<Cuentas> {
     @Produces(MediaType.APPLICATION_JSON)
     public String cuentas() {
         return new Gson().toJson(super.getCuentas());
-    }
-
-    @GET
-    @Path("{from}/{to}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Cuentas> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
-    }
-
-    @GET
-    @Path("count")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String countREST() {
-        return String.valueOf(super.count());
     }
 
     @Override
