@@ -39,14 +39,14 @@ public class CuentasFacadeREST extends AbstractFacade<Cuentas> {
     }
 
     @GET
-        
     @Produces(MediaType.APPLICATION_JSON)
-    public Response cuentas() {
+    public String cuentas() {
         System.out.println("GETTO");
-        return Response.ok().entity(new Gson().toJson(super.getCuentas()))
-                .header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
-                .allow("OPTIONS").build();
+        return new Gson().toJson(super.getCuentas());
+//        return Response.ok().entity(new Gson().toJson(super.getCuentas()))
+//                .header("Access-Control-Allow-Origin", "*")
+//                .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+//                .allow("OPTIONS").build();
     }
 
     @POST
