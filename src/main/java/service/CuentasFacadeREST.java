@@ -85,13 +85,7 @@ public class CuentasFacadeREST extends AbstractFacade<Cuentas> {
         super.remove(super.find(id));
     }
 
-    @GET
-    @Path("{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public String find(@PathParam("id") String id) {
-        return new Gson().toJson(super.find(id));
-    }
-
+    
     @Override
     protected EntityManager getEntityManager() {
         return em;
