@@ -7,8 +7,6 @@ package service;
 
 import com.google.gson.Gson;
 import entities.Cuentas;
-import java.util.Arrays;
-import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,7 +18,9 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -37,13 +37,21 @@ public class CuentasFacadeREST extends AbstractFacade<Cuentas> {
         super(Cuentas.class);
     }
 
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response cuentas() {
+        System.out.println("GETTO");
+        return Response.ok().entity(new Gson().toJson(super.getCuentas()))
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+                .allow("OPTIONS").build();
+    }
+
     @POST
     @Consumes(MediaType.TEXT_PLAIN)
-    public void create(String json) {
+    public void create(@QueryParam("idCuenta") String id, @QueryParam("cuenta") String cuenta, @QueryParam("sucesor") String sucesor, @QueryParam("ajuste") boolean ajuste) {
         System.out.println("POST");
-        Gson g = new Gson();
-        Cuentas c = g.fromJson(json, Cuentas.class);
-        System.out.println(json);
+        System.out.println(id + cuenta + sucesor + ajuste);
         //super.create(entity);
     }
 
@@ -64,19 +72,12 @@ public class CuentasFacadeREST extends AbstractFacade<Cuentas> {
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public String find(@PathParam("id") String id) {
-        System.out.println("GETTO");
         return new Gson().toJson(super.find(id));
-    }
-
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public String cuentas() {
-        return new Gson().toJson(super.getCuentas());
     }
 
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }
