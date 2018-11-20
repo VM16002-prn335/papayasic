@@ -52,9 +52,12 @@ public class CuentasFacadeREST extends AbstractFacade<Cuentas> {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public void addCuenta(String json) {
-        
         System.out.println("POST");
+        Gson g = new Gson();
+        Cuentas c = g.fromJson(json, Cuentas.class);
         System.out.println(json);
+        System.out.println(c.getIdCuenta());
+        System.out.println(c);
         //super.create(entity);
     }
 
