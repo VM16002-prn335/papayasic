@@ -7,6 +7,7 @@ package service;
 
 import com.google.gson.Gson;
 import entities.Cuentas;
+import java.lang.annotation.Annotation;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -49,9 +50,19 @@ public class CuentasFacadeREST extends AbstractFacade<Cuentas> {
 
     @POST
     @Consumes(MediaType.TEXT_PLAIN)
-    public void create(@QueryParam("idCuenta") String id, @QueryParam("cuenta") String cuenta, @QueryParam("sucesor") String sucesor, @QueryParam("ajuste") boolean ajuste) {
+    public Response addCuenta(@QueryParam("idCuenta") String id, 
+            @QueryParam("cuenta") String cuenta, 
+            @QueryParam("sucesor") String sucesor, 
+            @QueryParam("ajuste") boolean ajuste) {
+        
         System.out.println("POST");
         System.out.println(id + cuenta + sucesor + ajuste);
+        return Response.ok()
+            .entity(id)
+            .header("Access-Control-Allow-Origin","*")
+            .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+            .allow("OPTIONS")
+            .build();
         //super.create(entity);
     }
 
