@@ -56,7 +56,7 @@ public class Cuentas implements Serializable {
     @OneToMany(mappedBy = "sucesor")
     private List<Cuentas> cuentasList;
     @JoinColumn(name = "sucesor", referencedColumnName = "id_cuenta")
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     private Cuentas sucesor;
 
     public Cuentas() {

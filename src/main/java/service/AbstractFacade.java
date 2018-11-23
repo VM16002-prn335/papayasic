@@ -32,7 +32,11 @@ public abstract class AbstractFacade<T> {
 //        } catch (Exception e) {
 //            System.out.println("create: "+e);
 //        }
-        getEntityManager().persist(entity);
+        try {
+            getEntityManager().persist(entity);
+        } catch (Exception e) {
+            System.out.println("create: "+e);
+        }
     }
 
     public void edit(T entity) {
