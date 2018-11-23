@@ -25,14 +25,14 @@ public abstract class AbstractFacade<T> {
     protected abstract EntityManager getEntityManager();
 
     public void create(T entity) {
-        try {
-            getEntityManager().getTransaction().begin();
-            getEntityManager().persist(entity);
-            getEntityManager().getTransaction().commit();
-        } catch (Exception e) {
-            System.out.println("create: "+e);
-        }
-//        getEntityManager().persist(entity);
+//        try {
+//            getEntityManager().getTransaction().begin();
+//            getEntityManager().persist(entity);
+//            getEntityManager().getTransaction().commit();
+//        } catch (Exception e) {
+//            System.out.println("create: "+e);
+//        }
+        getEntityManager().persist(entity);
     }
 
     public void edit(T entity) {
