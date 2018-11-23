@@ -8,6 +8,7 @@ package entities;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -55,7 +56,7 @@ public class Cuentas implements Serializable {
     @OneToMany(mappedBy = "sucesor")
     private List<Cuentas> cuentasList;
     @JoinColumn(name = "sucesor", referencedColumnName = "id_cuenta")
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Cuentas sucesor;
 
     public Cuentas() {
