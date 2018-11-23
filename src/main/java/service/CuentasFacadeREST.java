@@ -23,6 +23,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -41,13 +42,10 @@ public class CuentasFacadeREST extends AbstractFacade<Cuentas> {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String cuentas() {
+    public Response cuentas() {
         System.out.println("GETTO");
-        return new Gson().toJson(super.getCuentas());
-//        return Response.ok().entity(new Gson().toJson(super.getCuentas()))
-//                .header("Access-Control-Allow-Origin", "*")
-//                .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
-//                .allow("OPTIONS").build();
+//        return new Gson().toJson(super.getCuentas());
+        return Response.ok().entity(new Gson().toJson(super.getCuentas())).build();
     }
 
     @POST
