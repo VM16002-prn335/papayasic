@@ -46,7 +46,7 @@ public class CuentasFacadeREST extends AbstractFacade<Cuentas> {
         System.out.println("GETTO");
         String str = "{\"res\":[";
         for (Object[] li : super.getCuentas()) {
-            str+="{\"idCuenta\":"+li[0]+",\"nombre\":"+li[1]+"},";
+            str+="{\"idCuenta\":\""+li[0]+"\",\"nombre\":\""+li[1]+"\"},";
         }
         str = str.replaceAll("\\,$", "");
         str+="]}";
