@@ -78,7 +78,7 @@ public abstract class AbstractFacade<T> {
         List<Object[]> lis = new ArrayList<>();
 
         try {
-            Query q = getEntityManager().createQuery("SELECT m.idCuenta, m.cuenta FROM Cuentas m");
+            Query q = getEntityManager().createQuery("SELECT m.idCuenta, m.cuenta FROM Cuentas m ORDER BY m.idCuenta");
             lis = q.getResultList();
         } catch (Exception e) {
             System.out.println("ex" + e);
