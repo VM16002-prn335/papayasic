@@ -44,7 +44,14 @@ public class CuentasFacadeREST extends AbstractFacade<Cuentas> {
     @Produces(MediaType.APPLICATION_JSON)
     public String cuentas() {
         System.out.println("GETTO");
-        return new Gson().toJson(super.getCuentas()).replaceAll("^\\[", "{").replaceAll("\\]$", "}");
+        String str = "{\"res\":[";
+        for (Object[] li : super.getCuentas()) {
+            str+="{\"idCuenta\":"+li[0]+",\"nombre\":"+li[1]+"},";
+        }
+        str = str.replaceAll("\\,$", "");
+        str+="]}";
+        
+        return str;
     }
 
     @POST
