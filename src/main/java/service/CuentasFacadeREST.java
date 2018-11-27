@@ -5,9 +5,6 @@
  */
 package service;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import entities.Cuentas;
@@ -23,7 +20,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 /**
  *
@@ -43,14 +39,29 @@ public class CuentasFacadeREST extends AbstractFacade<Cuentas> {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String cuentas() {
-        System.out.println("GETTO");
+        System.out.println("GET CUENTAS.");
         String str = "{\"res\":[";
         for (Object[] li : super.getCuentas()) {
             str+="{\"idCuenta\":\""+li[0]+"\",\"nombre\":\""+li[1]+"\"},";
         }
         str = str.replaceAll("\\,$", "");
         str+="]}";
-        
+        return str;
+    }
+    
+    @GET
+    @Path("/mayor")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String mayor(){
+        System.out.println("GET MAYOR.");
+        String str = "{\"res\":[";
+        for (Object[] li : super.getCuentasMayor()) {
+            
+            str+="{\"cuenta\":\""+li[1]+"\",\"cargo\":\""+super.getCargos(li[0].toString())+"\",\"abono\":\""+super.getAbonos(li[0].toString())+"\"},";
+            
+        }
+        str = str.replaceAll("\\,$", "");
+        str+="]}";
         return str;
     }
 

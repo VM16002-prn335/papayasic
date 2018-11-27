@@ -73,17 +73,54 @@ public abstract class AbstractFacade<T> {
         javax.persistence.Query q = getEntityManager().createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
     }
-
-    public List<Object[]> getCuentas() {
+    
+    List<Object[]> executeObjectArray(String query){
         List<Object[]> lis = new ArrayList<>();
 
         try {
-            Query q = getEntityManager().createQuery("SELECT m.idCuenta, m.cuenta FROM Cuentas m ORDER BY m.idCuenta");
+            Query q = getEntityManager().createQuery(query);
             lis = q.getResultList();
         } catch (Exception e) {
             System.out.println("ex" + e);
         }
         return lis;
+    }
+    
+     Object executeObject(String query){
+        Object lis = "";
+
+        try {
+            Query q = getEntityManager().createQuery(query);
+            if(q.getResultList().isEmpty()){
+                return "0.0";
+            }
+            lis = q.getResultList().get(0);
+        } catch (Exception e) {
+            System.out.println("ex" + e);
+        }
+        return lis;
+    }
+    
+   
+
+    public List<Object[]> getCuentas() {
+        return executeObjectArray("SELECT m.idCuenta, m.cuenta FROM Cuentas m ORDER BY m.idCuenta");
+    }
+    
+    public List<Object[]> getTransacciones() {
+        return executeObjectArray("SELECT t.idAbono.cuenta, t.idCargo.cuenta, t.monto, CONCAT(t.fecha,\"\") FROM Transaccion t");
+    }
+    
+    public String getAbonos(String id) {
+        return executeObject("SELECT SUM(m.monto) FROM Transaccion m WHERE m.idAbono.idCuenta =\""+id+"\" GROUP BY m.idAbono.cuenta").toString();
+    }
+    
+    public String getCargos(String id) {
+        return executeObject("SELECT SUM(m.monto) FROM Transaccion m WHERE m.idCargo.idCuenta =\""+id+"\" GROUP BY m.idCargo.cuenta").toString();
+    }
+    
+    public List<Object[]> getCuentasMayor() {
+        return executeObjectArray("SELECT m.idCuenta, m.cuenta FROM Cuentas m WHERE m.idCuenta IN (SELECT DISTINCT t.idCargo.idCuenta FROM Transaccion t) OR m.idCuenta IN (SELECT DISTINCT p.idAbono.idCuenta FROM Transaccion p)");
     }
 
 }
