@@ -35,7 +35,7 @@ public class TransaccionFacadeREST extends AbstractFacade<Transaccion> {
         System.out.println("GET TRANSACCIONES");
         String str = "{\"res\":[";
         for (Object[] li : super.getTransacciones()) {
-            str+="{\"cargo\":\""+li[0]+"\",\"abono\":\""+li[1]+"\",\"monto\":\""+li[2]+"\",\"fecha\":\""+li[3]+"\"},";
+            str+="{\"cargo\":\""+li[0]+"\",\"abono\":\""+li[1]+"\",\"monto\":\""+li[2]+"\",\"fecha\":\""+li[3]+"\",\"comentario\":\""+li[4]+"\"},";
         }
         str = str.replaceAll("\\,$", "");
         str+="]}";
