@@ -55,16 +55,21 @@ public class CuentasFacadeREST extends AbstractFacade<Cuentas> {
     public String mayor(){
         System.out.println("GET MAYOR.");
         String str = "{\"res\":[";
+        double cargo=0.0,abono=0.0;
         for (Object[] li : super.getCuentasMayor()) {
             
             str+="{\"cuenta\":\""+li[1]+"\",\"cargo\":\"";
             if(Double.parseDouble(super.getCargos(li[0].toString())) > Double.parseDouble(super.getAbonos(li[0].toString()))){
+                cargo+= (Double.parseDouble(super.getCargos(li[0].toString()))-Double.parseDouble(super.getAbonos(li[0].toString())));
                 str+= (Double.parseDouble(super.getCargos(li[0].toString()))-Double.parseDouble(super.getAbonos(li[0].toString())))+"\",\"abono\":\"0.0\"},";
             }else{
+                abono+= (Double.parseDouble(super.getAbonos(li[0].toString()))-Double.parseDouble(super.getCargos(li[0].toString())));
                 str+= "0.0\",\"abono\":\""+(Double.parseDouble(super.getAbonos(li[0].toString()))-Double.parseDouble(super.getCargos(li[0].toString())))+"\"},";
             }
             
         }
+        
+        str+= "{\"cuenta\":\"Total\",\"cargo\":\""+cargo+"\",\"abono\":\""+abono+"\"}";
         str = str.replaceAll("\\,$", "");
         str+="]}";
         return str;
