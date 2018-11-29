@@ -57,7 +57,12 @@ public class CuentasFacadeREST extends AbstractFacade<Cuentas> {
         String str = "{\"res\":[";
         for (Object[] li : super.getCuentasMayor()) {
             
-            str+="{\"cuenta\":\""+li[1]+"\",\"cargo\":\""+super.getCargos(li[0].toString())+"\",\"abono\":\""+super.getAbonos(li[0].toString())+"\"},";
+            str+="{\"cuenta\":\""+li[1]+"\",\"cargo\":\"";
+            if(Double.parseDouble(super.getCargos(li[0].toString())) > Double.parseDouble(super.getAbonos(li[0].toString()))){
+                str+= (Double.parseDouble(super.getCargos(li[0].toString()))-Double.parseDouble(super.getAbonos(li[0].toString())))+"\",\"abono\":\"0.0\"},";
+            }else{
+                str+= "0.0\",\"abono\":\""+(Double.parseDouble(super.getAbonos(li[0].toString()))-Double.parseDouble(super.getCargos(li[0].toString())))+"\"},";
+            }
             
         }
         str = str.replaceAll("\\,$", "");

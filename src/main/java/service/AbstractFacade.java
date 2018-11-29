@@ -24,14 +24,7 @@ public abstract class AbstractFacade<T> {
 
     protected abstract EntityManager getEntityManager();
 
-    public void create(T entity) {
-//        try {
-//            getEntityManager().getTransaction().begin();
-//            getEntityManager().persist(entity);
-//            getEntityManager().getTransaction().commit();
-//        } catch (Exception e) {
-//            System.out.println("create: "+e);
-//        }
+    public void create(T entity) {  
         try {
             getEntityManager().persist(entity);
         } catch (Exception e) {
@@ -120,7 +113,11 @@ public abstract class AbstractFacade<T> {
     }
     
     public List<Object[]> getCuentasMayor() {
-        return executeObjectArray("SELECT m.idCuenta, m.cuenta FROM Cuentas m WHERE m.idCuenta IN (SELECT DISTINCT t.idCargo.idCuenta FROM Transaccion t) OR m.idCuenta IN (SELECT DISTINCT p.idAbono.idCuenta FROM Transaccion p)");
+        return executeObjectArray("SELECT m.idCuenta, m.cuenta FROM Cuentas m WHERE m.idCuenta IN (SELECT DISTINCT t.idCargo.idCuenta FROM Transaccion t) OR m.idCuenta IN (SELECT DISTINCT p.idAbono.idCuenta FROM Transaccion p) ORDER BY m.idCuenta");
+    }
+    
+    public String getTotalCuentas() {
+        return executeObject("SELECT SUM(f.monto) FROM Transaccion f").toString();
     }
 
 }
