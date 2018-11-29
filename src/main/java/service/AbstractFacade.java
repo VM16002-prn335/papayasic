@@ -116,6 +116,10 @@ public abstract class AbstractFacade<T> {
         return executeObjectArray("SELECT m.idCuenta, m.cuenta FROM Cuentas m WHERE m.idCuenta IN (SELECT DISTINCT t.idCargo.idCuenta FROM Transaccion t) OR m.idCuenta IN (SELECT DISTINCT p.idAbono.idCuenta FROM Transaccion p) ORDER BY m.idCuenta");
     }
     
+    public List<Object[]> getCuentasBy(String id){
+        return executeObjectArray("SELECT m.idCuenta, m.cuenta FROM Cuentas m WHERE m.idCuenta LIKE \""+id+"%\" AND (m.idCuenta IN (SELECT DISTINCT t.idCargo.idCuenta FROM Transaccion t) OR m.idCuenta IN (SELECT DISTINCT p.idAbono.idCuenta FROM Transaccion p)) ORDER BY m.idCuenta");
+    }
+    
     public String getTotalCuentas() {
         return executeObject("SELECT SUM(f.monto) FROM Transaccion f").toString();
     }

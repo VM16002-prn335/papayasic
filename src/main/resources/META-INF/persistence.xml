@@ -4,7 +4,7 @@
     <jta-data-source>java:app/sic</jta-data-source>
     <class>entities.Cuentas</class>
     <class>entities.Transaccion</class>
-    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties/>
   </persistence-unit>
 </persistence>
