@@ -76,53 +76,29 @@ public class CuentasFacadeREST extends AbstractFacade<Cuentas> {
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/estado")
+    @Path("/estados")
     public String estado(){
-        System.out.println("GET ESTADO");
-        String str = "{\"res\":[";
-        double total=0.0;
+        System.out.println("GET ESTADOS");
+        String str = "{\"est\":[";
+        double utilidad=0.0,capital=0.0, activos=0.0, pasivos=0.0;
         
-        for (Object[] li : super.getCuentasBy("5")) {
+        for (int i = 5; i >= 4; i--) {
+            for (Object[] li : super.getCuentasBy(String.valueOf(i))) {
             str+="{\"cuenta\":\""+li[1]+"\",\"monto\":\""+Math.abs(Double.parseDouble(super.getCargos(li[0].toString()))-Double.parseDouble(super.getAbonos(li[0].toString())))+"\"},";
-            total+=Math.abs(Double.parseDouble(super.getCargos(li[0].toString()))-Double.parseDouble(super.getAbonos(li[0].toString())));
+            utilidad+=(Double.parseDouble(super.getAbonos(li[0].toString()))-Double.parseDouble(super.getCargos(li[0].toString())));
         }
-        for (Object[] li : super.getCuentasBy("4")) {
-            str+="{\"cuenta\":\""+li[1]+"\",\"monto\":\""+Math.abs(Double.parseDouble(super.getCargos(li[0].toString()))-Double.parseDouble(super.getAbonos(li[0].toString())))+"\"},";
-            total-=Math.abs(Double.parseDouble(super.getCargos(li[0].toString()))-Double.parseDouble(super.getAbonos(li[0].toString())));
         }
         
-        str+="{\"cuenta\":\"Utilidad\",\"monto\":\""+total+"\"}";
-        str+="]}";
-        return str;
-    }
-    
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("/capital/{utilidad}")
-    public String capital(@PathParam("utilidad") String utilidad){
-        System.out.println("GET VARIANZA DE CAPITAL");
-        String str = "{\"res\":[";
-        double total=0.0;
+        str+="{\"cuenta\":\"Utilidad\",\"monto\":\""+utilidad+"\"}],\"cap\":[";
         
         for (Object[] li : super.getCuentasBy("3")) {
             str+="{\"cuenta\":\""+li[1]+"\",\"monto\":\""+Math.abs(Double.parseDouble(super.getAbonos(li[0].toString()))-Double.parseDouble(super.getCargos(li[0].toString())))+"\"},";
-            total+=(Double.parseDouble(super.getAbonos(li[0].toString()))-Double.parseDouble(super.getCargos(li[0].toString())));
+            capital+=(Double.parseDouble(super.getAbonos(li[0].toString()))-Double.parseDouble(super.getCargos(li[0].toString())));
         }
         
         str+="{\"cuenta\":\"Utilidad\",\"monto\":\""+utilidad+"\"},";
-        total += Double.parseDouble(utilidad);
-        str+="{\"cuenta\":\"Capital\",\"monto\":\""+total+"\"}";
-        str+="]}";
-        return str;
-    }
-    
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("/balance/{capital}")
-    public String balance(@PathParam("capital") String capital){
-        System.out.println("GET BALANZE GENERAL");
-        String str = "{\"res\":[";
-        double activos=0.0, pasivos=0.0;
+        capital += utilidad;
+        str+="{\"cuenta\":\"Capital\",\"monto\":\""+capital+"\"}],\"balan\":[";
         
         for (Object[] li : super.getCuentasBy("1")) {
             str+="{\"tipo\":\"activo\",\"cuenta\":\""+li[1]+"\",\"monto\":\""+(Double.parseDouble(super.getCargos(li[0].toString()))-Double.parseDouble(super.getAbonos(li[0].toString())))+"\"},";
@@ -135,8 +111,8 @@ public class CuentasFacadeREST extends AbstractFacade<Cuentas> {
         }
         
         str+="{\"tipo\":\"activo\",\"cuenta\":\"Total\",\"monto\":\""+activos+"\"},";
-        str+="{\"tipo\":\"pasivo\",\"cuenta\":\"Total\",\"monto\":\""+(pasivos+Double.parseDouble(capital))+"\"}";
-        str+="]}";
+        str+="{\"tipo\":\"pasivo\",\"cuenta\":\"Total\",\"monto\":\""+(pasivos+capital)+"\"}]}";
+        
         return str;
     }
     
@@ -163,8 +139,7 @@ public class CuentasFacadeREST extends AbstractFacade<Cuentas> {
         }   
         }
         
-        str+="{\"cuenta\":\"Total\",\"monto\":\""+total+"\"}";
-        str+="]}";
+        str+="{\"cuenta\":\"Total\",\"monto\":\""+total+"\"}]}";
         return str;
     }
 
