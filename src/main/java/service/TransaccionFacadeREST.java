@@ -5,11 +5,17 @@
  */
 package service;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import entities.Cuentas;
 import entities.Transaccion;
+import java.util.Date;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -41,6 +47,22 @@ public class TransaccionFacadeREST extends AbstractFacade<Transaccion> {
         str+="]}";
         
         return str;
+    }
+    
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void addTransacion(String json){
+        System.out.println("TRANSACCION\n"+json);
+        JsonObject jo = (JsonObject) new JsonParser().parse(json);
+        Transaccion t = new Transaccion();
+        
+        t.setMonto(Double.parseDouble(jo.get("monto").toString().replaceAll("\"", "")));
+        //t.setFecha(new Date(0, 0, 0));
+        t.setComentario(jo.get("comentario").toString().replaceAll("\"", ""));
+        t.setIdAbono(new Cuentas(jo.get("idAbono").toString().replaceAll("\"", "")));
+        t.setIdCargo(new Cuentas(jo.get("idCargo").toString().replaceAll("\"", "")));
+        
+        //super.create(t);
     }
     
 

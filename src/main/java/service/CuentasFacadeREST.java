@@ -93,7 +93,7 @@ public class CuentasFacadeREST extends AbstractFacade<Cuentas> {
         
         for (Object[] li : super.getCuentasBy("3")) {
             str+="{\"cuenta\":\""+li[1]+"\",\"monto\":\""+Math.abs(Double.parseDouble(super.getAbonos(li[0].toString()))-Double.parseDouble(super.getCargos(li[0].toString())))+"\"},";
-            capital+=(Double.parseDouble(super.getAbonos(li[0].toString()))-Double.parseDouble(super.getCargos(li[0].toString())));
+            capital+=(Double.parseDouble(super.getAbonos(li[0].toString()))-    Double.parseDouble(super.getCargos(li[0].toString())));
         }
         
         str+="{\"cuenta\":\"Utilidad\",\"monto\":\""+utilidad+"\"},";
@@ -146,8 +146,7 @@ public class CuentasFacadeREST extends AbstractFacade<Cuentas> {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public void addCuenta(String json) {
-        System.out.println("POST");
-        System.out.println(json);
+        System.out.println("POST\n"+json);
         JsonParser jsonParser = new JsonParser();
         JsonObject jo = (JsonObject) jsonParser.parse(json);
         Cuentas c = new Cuentas();
