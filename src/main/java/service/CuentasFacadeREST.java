@@ -109,7 +109,8 @@ public class CuentasFacadeREST extends AbstractFacade<Cuentas> {
             str+="{\"tipo\":\"pasivo\",\"cuenta\":\""+li[1]+"\",\"monto\":\""+(Double.parseDouble(super.getAbonos(li[0].toString()))-Double.parseDouble(super.getCargos(li[0].toString())))+"\"},";
             pasivos+=(Double.parseDouble(super.getAbonos(li[0].toString()))-Double.parseDouble(super.getCargos(li[0].toString())));
         }
-        
+
+        str+="{\"tipo\":\"pasivo\",\"cuenta\":\"Capital\",\"monto\":\""+capital+"\"},";
         str+="{\"tipo\":\"activo\",\"cuenta\":\"Total\",\"monto\":\""+activos+"\"},";
         str+="{\"tipo\":\"pasivo\",\"cuenta\":\"Total\",\"monto\":\""+(pasivos+capital)+"\"}]}";
         
