@@ -57,11 +57,12 @@ public class TransaccionFacadeREST extends AbstractFacade<Transaccion> {
         Transaccion t = new Transaccion();
         
         t.setMonto(Double.parseDouble(jo.get("monto").toString().replaceAll("\"", "")));
-        //t.setFecha(new Date(0, 0, 0));
+        t.setFecha(new Date(Integer.parseInt(jo.get("fecha").toString().replaceAll("\"", "").split("-")[0]), Integer.parseInt(jo.get("fecha").toString().replaceAll("\"", "").split("-")[1]), Integer.parseInt(jo.get("fecha").toString().replaceAll("\"", "").split("-")[2])));
         t.setComentario(jo.get("comentario").toString().replaceAll("\"", ""));
         t.setIdAbono(new Cuentas(jo.get("idAbono").toString().replaceAll("\"", "")));
         t.setIdCargo(new Cuentas(jo.get("idCargo").toString().replaceAll("\"", "")));
-        
+        System.out.println(t.getMonto() + "\t" + t.getComentario() + "\t" + t.getFecha() + "\t" + t.getIdAbono() + "\t" + t.getIdCargo());
+       
         //super.create(t);
     }
     
