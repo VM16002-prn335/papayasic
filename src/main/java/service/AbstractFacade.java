@@ -123,5 +123,17 @@ public abstract class AbstractFacade<T> {
     public String getTotalCuentas() {
         return executeObject("SELECT SUM(f.monto) FROM Transaccion f").toString();
     }
+    
+    public List<Object[]> getCuentasPadre() {
+        return executeObjectArray("SELECT m.idCuenta, m.cuenta FROM Cuentas m WHERE m.idCuenta NOT IN (SELECT DISTINCT p.idAbono.idCuenta FROM Transaccion p) AND m.idCuenta NOT IN (SELECT DISTINCT t.idCargo.idCuenta FROM Transaccion t) ORDER BY m.idCuenta");
+    }
+    
+    public List<Object[]> getCuentasHijo() {
+        return executeObjectArray("SELECT DISTINCT m.idCuenta, m.cuenta FROM Cuentas m WHERE m.idCuenta NOT IN(SELECT DISTINCT g.sucesor.idCuenta FROM Cuentas g) ORDER BY m.idCuenta");
+    }
+    
+    public String getNuevoId(String id){
+        return id + (executeObject("SELECT COUNT(m) FROM Cuentas m WHERE m.idCuenta LIKE \""+id+"._\"").toString() + 1);
+    }            
 
 }
