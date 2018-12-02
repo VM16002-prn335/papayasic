@@ -133,7 +133,7 @@ public abstract class AbstractFacade<T> {
     }
     
     public String getNuevoId(String id){
-        return id + (executeObject("SELECT COUNT(m) FROM Cuentas m WHERE m.idCuenta LIKE \""+id+"._\"").toString() + 1);
+        return id + "." + executeObject("SELECT COUNT(m)+1 FROM Cuentas m WHERE m.idCuenta LIKE \""+id+"._\"").toString();
     }            
 
 }

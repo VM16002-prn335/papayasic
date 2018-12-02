@@ -139,8 +139,42 @@ public class CuentasFacadeREST extends AbstractFacade<Cuentas> {
             
         }   
         }
+        if(total>0){
+            str+="{\"cuenta\":\"Total\",\"cargo\":\""+total+"\"}]}";    
+        }else{
+            str+="{\"cuenta\":\"Total\",\"abono\":\""+(-total)+"\"}]}";
+        }
         
-        str+="{\"cuenta\":\"Total\",\"monto\":\""+total+"\"}]}";
+        return str;
+    }
+    
+    @GET
+    @Path("/padre")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String padre(){
+        System.out.println("GET PADRE");
+        String str = "{\"res\":[";
+        for (Object[] li : super.getCuentasPadre()) {
+            str+="{\"idCuenta\":\""+li[0]+"\",\"nombre\":\""+li[1]+"\"},";
+        }
+        str = str.replaceAll("\\,$", "");
+        str+="]}";
+        
+        return str;
+    }
+    
+    @GET
+    @Path("/hijo")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String hijo(){
+        System.out.println("GET HIJO");
+        String str = "{\"res\":[";
+        for (Object[] li : super.getCuentasHijo()) {
+            str+="{\"idCuenta\":\""+li[0]+"\",\"nombre\":\""+li[1]+"\"},";
+        }
+        str = str.replaceAll("\\,$", "");
+        str+="]}";
+        
         return str;
     }
 
@@ -153,7 +187,7 @@ public class CuentasFacadeREST extends AbstractFacade<Cuentas> {
         Cuentas c = new Cuentas();
         
         c.setIdCuenta(jo.get("idCuenta").toString().replaceAll("\"", ""));
-        c.setCuenta(jo.get("cuenta").toString().replaceAll("\"", ""));
+        c.setCuenta(jo.get("nombre").toString().replaceAll("\"", ""));
         if(jo.get("ajuste").toString().equalsIgnoreCase("true")){
             c.setAjuste(Boolean.TRUE);
         }else{
@@ -161,8 +195,8 @@ public class CuentasFacadeREST extends AbstractFacade<Cuentas> {
         }
         c.setSucesor(new Cuentas(super.getNuevoId(jo.get("idCuenta").toString().replaceAll("\"", ""))));
         
-        System.out.println(c.getIdCuenta()+"  "+c.getAjuste()+"  "+c.getCuenta()+" "+c.getSucesor().getIdCuenta());
-        //super.create(c);
+        //System.out.println(c.getIdCuenta()+"  "+c.getAjuste()+"  "+c.getCuenta()+" "+c.getSucesor().getIdCuenta());
+        super.create(c);
     }
 
     @PUT
