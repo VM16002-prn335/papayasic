@@ -186,14 +186,14 @@ public class CuentasFacadeREST extends AbstractFacade<Cuentas> {
         JsonObject jo = (JsonObject) jsonParser.parse(json);
         Cuentas c = new Cuentas();
         
-        c.setIdCuenta(jo.get("idCuenta").toString().replaceAll("\"", ""));
+        c.setIdCuenta(super.getNuevoId(jo.get("idCuenta").toString().replaceAll("\"", "")));
         c.setCuenta(jo.get("nombre").toString().replaceAll("\"", ""));
         if(jo.get("ajuste").toString().equalsIgnoreCase("true")){
             c.setAjuste(Boolean.TRUE);
         }else{
             c.setAjuste(Boolean.FALSE);
         }
-        c.setSucesor(new Cuentas(super.getNuevoId(jo.get("idCuenta").toString().replaceAll("\"", ""))));
+        c.setSucesor(new Cuentas(jo.get("idCuenta").toString().replaceAll("\"", "")));
         
         System.out.println(c.getIdCuenta()+"  "+c.getAjuste()+"  "+c.getCuenta()+" "+c.getSucesor().getIdCuenta());
         super.create(c);
