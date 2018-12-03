@@ -101,7 +101,7 @@ public abstract class AbstractFacade<T> {
     }
     
     public List<Object[]> getTransacciones() {
-        return executeObjectArray("SELECT t.idAbono.cuenta, t.idCargo.cuenta, t.monto, CONCAT(t.fecha,\"\"), t.comentario FROM Transaccion t");
+        return executeObjectArray("SELECT t.idCargo.cuenta, t.idAbono.cuenta, t.monto, CONCAT(t.fecha,\"\"), t.comentario FROM Transaccion t");
     }
     
     public String getAbonos(String id) {
